@@ -112,7 +112,6 @@ TEST_F(ArrayListTest, AddAndGet)
     ArrayList<uint32_t> a;
     for (uint32_t i = 0; i < 4000; i += 2)
         a.add(i);
-
     for (uint32_t i = 0; i < 2000; ++i) {
         EXPECT_EQ(a[i], i * 2);
         EXPECT_EQ(a.get(i), i * 2);
@@ -231,10 +230,10 @@ TEST_F(ArrayListTest, Swap)
     EXPECT_EQ(a.size(), 10UL);
     EXPECT_EQ(b.size(), 20UL);
 
-    for (uint32_t i = 0; i < a.size(); ++i) 
+    for (uint32_t i = 0; i < a.size(); ++i)
         EXPECT_EQ(a[i], 100L);
 
-    for (uint32_t i = 0; i < b.size(); ++i) 
+    for (uint32_t i = 0; i < b.size(); ++i)
         EXPECT_EQ(b[i], 200L);
 }
 

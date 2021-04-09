@@ -169,6 +169,11 @@ private:
      * The maximum capacity of the physical buffer.
      */
     uint32_t mCapacity;
+    /**
+     * check if the index out of range,throw an out-of-range exception if true
+     * @param index
+     */
+    void check_range(const uint32_t& index) const;
 };
 
 #include "../src/ArrayList.cpp"
