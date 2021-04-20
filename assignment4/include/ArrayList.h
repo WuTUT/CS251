@@ -126,7 +126,7 @@ public:
      * Empty check.
      * @return True if this ArrayList is empty and false otherwise.
      */
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
     /**
      * Returns iterator to the beginning; in this case, a random access iterator
@@ -167,7 +167,7 @@ public:
      * Perform an exception-safe swap of the contents of *this with
      * src.
      */
-    void swap(ArrayList<T> &src) noexcept;
+    void swap(ArrayList<T>& src) noexcept;
 
 private:
     /**
@@ -184,6 +184,11 @@ private:
      * The maximum capacity of the physical buffer.
      */
     uint32_t mCapacity;
+    /**
+     * Check the index is out of range or not.
+     * @param index
+     */
+    void check_range(const uint32_t& index) const;
 };
 
 #include "../src/ArrayList.cpp"
