@@ -37,7 +37,7 @@ ArrayList<T>::ArrayList(const uint32_t& size, const T& value)
     }
     mArray.reset(tmp);
     */
-    std::fill(mArray.get(), mArray.get() + mSize, value);
+    std::fill(begin(), end(), value);
 }
 template <typename T>
 ArrayList<T>::ArrayList(const ArrayList<T>& src)
@@ -53,6 +53,7 @@ ArrayList<T>::ArrayList(const ArrayList<T>& src)
     }
     mArray.reset(tmp);
      */
+    // std::copy(src.begin(),src.end(),this->begin());
     std::copy(src.mArray.get(), src.mArray.get() + mSize, mArray.get());
 }
 template <typename T>
@@ -219,6 +220,7 @@ template <typename T> void ArrayList<T>::set(const uint32_t& index, const T& val
 }
 template <typename T> T ArrayList<T>::remove(const uint32_t& index)
 {
+    // no need for strongly exception
     check_range(index);
     T ret = mArray[index];
     std::copy(mArray.get() + index + 1, mArray.get() + mSize, mArray.get() + index);
