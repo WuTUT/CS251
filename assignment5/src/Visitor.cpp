@@ -6,7 +6,8 @@
  *  Construct a visitor that prints to the provided ostream.
  */
 PrintVisitor::PrintVisitor(std::ostream& os)
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    : os(os)
 {
 }
 
@@ -15,5 +16,6 @@ PrintVisitor::PrintVisitor(std::ostream& os)
  */
 void PrintVisitor::visit(Object& object)
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    os << object.getName();
 }

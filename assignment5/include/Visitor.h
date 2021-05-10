@@ -12,16 +12,16 @@ class Object;
  */
 class Visitor {
 public:
-  /**
-   *  Pure virtual destructor. A necessary no-op since this is a base class.
-   */
-  virtual ~Visitor() = default;
+    /**
+     *  Pure virtual destructor. A necessary no-op since this is a base class.
+     */
+    virtual ~Visitor() = default;
 
-  /**
-   * The worker method of the visitor. For this assignment, Object is
-   * the only concrete class we can visit.
-   */
-  virtual void visit(Object& object) = 0;
+    /**
+     * The worker method of the visitor. For this assignment, Object is
+     * the only concrete class we can visit.
+     */
+    virtual void visit(Object& object) = 0;
 };
 
 /**
@@ -30,21 +30,21 @@ public:
  */
 class PrintVisitor : public Visitor {
 public:
-  /**
-   *  Construct a visitor that prints to the provided ostream.
-   */
-  explicit PrintVisitor(std::ostream& os);
+    /**
+     *  Construct a visitor that prints to the provided ostream.
+     */
+    explicit PrintVisitor(std::ostream& os);
 
-  /**
-   *  Prints the object's name.
-   */
-  void visit(Object& object) override;
+    /**
+     *  Prints the object's name.
+     */
+    void visit(Object& object) override;
 
 private:
-  /**
-   *  Reference to the ostream.
-   */
-  std::ostream& os;
+    /**
+     *  Reference to the ostream.
+     */
+    std::ostream& os;
 };
 
 #endif // VISITOR_H

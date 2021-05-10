@@ -8,19 +8,19 @@
  */
 class Parser {
 public:
-  /**
-   *  Loads the script file and configures the Universe. Consult the
-   *  assignment README.md for the syntax of the scripts.
-   */
-  void loadFile(const char* filename);
+    /**
+     *  Loads the script file and configures the Universe. Consult the
+     *  assignment README.md for the syntax of the scripts.
+     */
+    void loadFile(const char* filename);
 
 private:
-  const char* delims()
-  {
-    return "{}[], ";
-  }
+    const char* delims()
+    {
+        return "{}[], ";
+    }
 
-  double getDouble();
+    double getDouble();
 };
 
 #endif // PARSER_H

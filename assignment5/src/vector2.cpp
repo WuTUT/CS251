@@ -13,8 +13,9 @@
  */
 vector2::vector2() noexcept
 {
-  // TODO -- you fill in here by using std::fill() to initialize mData
-  // to 0.0.
+    // TODO -- you fill in here by using std::fill() to initialize mData
+    // to 0.0.
+    std::fill(mData, mData + DIMS, 0.0);
 }
 
 /**
@@ -22,8 +23,9 @@ vector2::vector2() noexcept
  */
 vector2::vector2(const double* ptr) noexcept
 {
-  // TODO -- you fill in here by using std::copy_n() to initialize
-  // mData to the first two values of the ptr parameter.
+    // TODO -- you fill in here by using std::copy_n() to initialize
+    // mData to the first two values of the ptr parameter.
+    std::copy(ptr, ptr + DIMS, begin());
 }
 
 /**
@@ -48,6 +50,8 @@ vector2 vector2::add(const vector2& rhs) const
 
     // TODO -- you fill in here to use the std::transform() method to
     // compute the sum of this vector and rhs.
+    std::transform(begin(), end(), rhs.begin(), sum.begin(), [](auto x,auto y){return x+y;});
+    return sum;
 }
 
 /**
@@ -55,12 +59,13 @@ vector2 vector2::add(const vector2& rhs) const
  */
 vector2 vector2::scale(const double& rhs) const
 {
-  vector2 s;
+    vector2 s;
 
-  // TODO -- you fill in here to use the std::transform() method to
-  // scale a copy of this vector by rhs into s and return s.
-
-  // Either the functor approach -- currently commented out -- or the lambda approach is fine
+    // TODO -- you fill in here to use the std::transform() method to
+    // scale a copy of this vector by rhs into s and return s.
+    std::transform(begin(), end(), s.begin(), [&rhs](auto num) { return num* rhs; });
+    return s;
+    // Either the functor approach -- currently commented out -- or the lambda approach is fine
 }
 
 /**
@@ -68,14 +73,18 @@ vector2 vector2::scale(const double& rhs) const
  */
 double vector2::dot(const vector2& rhs) const
 {
-  // TODO -- you fill in here to use the std::transform() method to
-  // return the dot (inner) product of this vector and rhs.
+    // TODO -- you fill in here to use the std::transform() method to
+    // return the dot (inner) product of this vector and rhs.
 
-  // transform will return the output iterator. Therefore, I hacked together
-  // an iterator that will actually accumulate the values that are "assigned
-  // to its content."
-  double product = 0.0;
-  vector2 outVec;
+    // transform will return the output iterator. Therefore, I hacked together
+    // an iterator that will actually accumulate the values that are "assigned
+    // to its content."
+    double product = 0.0;
+    vector2 outVec;
+    std::transform(begin(), end(), rhs.begin(), outVec.begin(),
+        [&product](auto x, auto y) { product += x * y; return product;});
+
+    return product;
 }
 
 /**
@@ -119,9 +128,10 @@ vector2 vector2::normalize() const
  */
 bool vector2::operator==(const vector2& rhs) const
 {
-  // Can use either a functor or lambda
-  // return std::equal(begin(), end(), rhs.begin(), epsilonTest());
-  return std::equal(begin(), end(), rhs.begin(), [](auto l, auto r) { return std::abs(r - l) < 0.0000000001; });
+    // Can use either a functor or lambda
+    // return std::equal(begin(), end(), rhs.begin(), epsilonTest());
+    return std::equal(
+        begin(), end(), rhs.begin(), [](auto l, auto r) { return std::abs(r - l) < 0.0000000001; });
 }
 
 /**
@@ -169,11 +179,10 @@ vector2 vector2::operator-() const
 /**
  *  Returns the difference between this vector and rhs.
  */
-vector2 vector2::operator-(const vector2 & rhs) const
+vector2 vector2::operator-(const vector2& rhs) const
 {
     return *this + -rhs;
 }
-
 
 /**
  *  Increments this vector by rhs and returns the result for chaining.
@@ -204,7 +213,7 @@ vector2& vector2::operator/=(const double& rhs)
  */
 vector2 vector2::operator/(const double& rhs) const
 {
-  return scale(1.0 / rhs);
+    return scale(1.0 / rhs);
 }
 
 /**
@@ -220,27 +229,27 @@ double vector2::operator*(const vector2& rhs) const
  */
 vector2 vector2::operator*(const double& rhs) const
 {
-  return scale(rhs);
+    return scale(rhs);
 }
 
 double* vector2::begin()
 {
-
+    return mData;
 }
 
 const double* vector2::begin() const
 {
-
+    return mData;
 }
 
 double* vector2::end()
 {
-
+    return mData + DIMS;
 }
 
 const double* vector2::end() const
 {
-
+    return mData + DIMS;
 }
 
 /**

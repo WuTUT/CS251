@@ -7,10 +7,10 @@
  *  Initializes an object with the provided properties.
  */
 Object::Object(const std::string& name, double mass, const vector2& pos, const vector2& vel)
-  : name(name),
-    mass(mass),
-    position(pos),
-    velocity(vel)
+    : name(name)
+    , mass(mass)
+    , position(pos)
+    , velocity(vel)
 {
 }
 
@@ -18,8 +18,9 @@ Object::Object(const std::string& name, double mass, const vector2& pos, const v
  *  An entry point for a visitor.
  */
 void Object::accept(Visitor& visitor)
-{ 
-  // TODO -- you fill in here.
+{
+    // TODO -- you fill in here.
+    visitor.visit(*this);
 }
 
 /**
@@ -28,7 +29,8 @@ void Object::accept(Visitor& visitor)
  */
 Object* Object::clone() const
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return new Object(name,mass,position,velocity);
 }
 
 /**
@@ -36,7 +38,7 @@ Object* Object::clone() const
  */
 double Object::getMass() const noexcept
 {
-  return mass;
+    return mass;
 }
 
 /**
@@ -44,7 +46,7 @@ double Object::getMass() const noexcept
  */
 std::string Object::getName() const noexcept
 {
-  return name;
+    return name;
 }
 
 /**
@@ -70,10 +72,11 @@ vector2 Object::getVelocity() const noexcept
  */
 vector2 Object::getForce(const Object& rhs) const noexcept
 {
-  double distSq = (rhs.getPosition() - getPosition()).normSq();
-  double mag = (Universe::G * getMass() * rhs.getMass()) / distSq;
-  vector2 dir = (rhs.getPosition() - getPosition()).normalize();
-  return mag * dir;
+    double distSq = (rhs.getPosition() - getPosition()).normSq();
+    double mag = (Universe::G * getMass() * rhs.getMass()) / distSq;
+    vector2 dir = (rhs.getPosition() - getPosition()).normalize();
+    auto ret = mag * dir;
+    return ret;
 }
 
 /**
@@ -81,7 +84,7 @@ vector2 Object::getForce(const Object& rhs) const noexcept
  */
 void Object::setPosition(const vector2& pos)
 {
-  position = pos;
+    position = pos;
 }
 
 /**
@@ -89,7 +92,7 @@ void Object::setPosition(const vector2& pos)
  */
 void Object::setVelocity(const vector2& vel)
 {
-  velocity = vel;
+    velocity = vel;
 }
 
 /**
@@ -97,7 +100,9 @@ void Object::setVelocity(const vector2& vel)
  */
 bool Object::operator==(const Object& rhs) const
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return name == rhs.name; //&& mass == rhs.mass && position == rhs.position
+        //&& velocity == rhs.velocity;
 }
 
 /**
@@ -105,5 +110,7 @@ bool Object::operator==(const Object& rhs) const
  */
 bool Object::operator!=(const Object& rhs) const
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return !(*this == rhs);
+
 }

@@ -5,6 +5,7 @@
 
 template <typename T>
 ArrayListIterator<T>::ArrayListIterator(T* ptr)
+    : mPtr(ptr)
 {
 }
 
@@ -15,6 +16,7 @@ ArrayListIterator<T>::ArrayListIterator(T* ptr)
  */
 template <typename T> bool ArrayListIterator<T>::operator==(const ArrayListIterator<T>& rhs) const
 {
+    return mPtr == rhs.mPtr;
 }
 
 /**
@@ -24,6 +26,7 @@ template <typename T> bool ArrayListIterator<T>::operator==(const ArrayListItera
  */
 template <typename T> bool ArrayListIterator<T>::operator!=(const ArrayListIterator<T>& rhs) const
 {
+    return mPtr != rhs.mPtr;
 }
 
 /**
@@ -32,6 +35,7 @@ template <typename T> bool ArrayListIterator<T>::operator!=(const ArrayListItera
  */
 template <typename T> T& ArrayListIterator<T>::operator*()
 {
+    return *mPtr;
 }
 
 /**
@@ -40,6 +44,7 @@ template <typename T> T& ArrayListIterator<T>::operator*()
  */
 template <typename T> const T& ArrayListIterator<T>::operator*() const
 {
+    return *mPtr;
 }
 
 /**
@@ -48,6 +53,7 @@ template <typename T> const T& ArrayListIterator<T>::operator*() const
  */
 template <typename T> T* ArrayListIterator<T>::operator->()
 {
+    return mPtr;
 }
 
 /**
@@ -56,6 +62,7 @@ template <typename T> T* ArrayListIterator<T>::operator->()
  */
 template <typename T> const T* ArrayListIterator<T>::operator->() const
 {
+    return mPtr;
 }
 
 /**
@@ -64,6 +71,8 @@ template <typename T> const T* ArrayListIterator<T>::operator->() const
  */
 template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator++()
 {
+    ++mPtr;
+    return *this;
 }
 
 /**
@@ -72,6 +81,9 @@ template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator++()
  */
 template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator++(int)
 {
+    ArrayListIterator<T> ret(mPtr);
+    mPtr++;
+    return ret;
 }
 
 /**
@@ -80,6 +92,8 @@ template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator++(int)
  */
 template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator--()
 {
+    --mPtr;
+    return *this;
 }
 
 /**
@@ -88,6 +102,9 @@ template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator--()
  */
 template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator--(int)
 {
+    ArrayListIterator<T> ret(mPtr);
+    mPtr--;
+    return ret;
 }
 
 /**
@@ -97,6 +114,7 @@ template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator--(int)
  */
 template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator+(int offset) const
 {
+    return ArrayListIterator<T>(mPtr + offset);
 }
 
 /**
@@ -106,6 +124,7 @@ template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator+(int o
  */
 template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator-(int offset) const
 {
+    return ArrayListIterator<T>(mPtr - offset);
 }
 
 /**
@@ -115,6 +134,7 @@ template <typename T> ArrayListIterator<T> ArrayListIterator<T>::operator-(int o
  */
 template <typename T> int ArrayListIterator<T>::operator-(const ArrayListIterator<T>& rhs) const
 {
+    return mPtr - rhs.mPtr;
 }
 
 /**
@@ -124,6 +144,8 @@ template <typename T> int ArrayListIterator<T>::operator-(const ArrayListIterato
  */
 template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator+=(const int& offset)
 {
+    mPtr += offset;
+    return *this;
 }
 
 /**
@@ -133,6 +155,8 @@ template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator+=(con
  */
 template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator-=(const int& offset)
 {
+    mPtr -= offset;
+    return *this;
 }
 
 /**
@@ -142,6 +166,7 @@ template <typename T> ArrayListIterator<T>& ArrayListIterator<T>::operator-=(con
  */
 template <typename T> T& ArrayListIterator<T>::operator[](const int& index)
 {
+    return mPtr[index];
 }
 
 /**
@@ -151,6 +176,7 @@ template <typename T> T& ArrayListIterator<T>::operator[](const int& index)
  */
 template <typename T> const T& ArrayListIterator<T>::operator[](int index) const
 {
+    return mPtr[index];
 }
 
 /**
@@ -162,6 +188,7 @@ template <typename T> const T& ArrayListIterator<T>::operator[](int index) const
  */
 template <typename T> ArrayListIterator<T> operator+(int offset, const ArrayListIterator<T>& iter)
 {
+    return ArrayListIterator<T>(iter + offset);
 }
 
 /************************************************************************************************/
@@ -174,6 +201,7 @@ template <typename T> ArrayListIterator<T> operator+(int offset, const ArrayList
 template <typename T>
 bool ArrayListConstIterator<T>::operator==(const ArrayListConstIterator<T>& rhs) const
 {
+    return mPtr == rhs.mPtr;
 }
 
 /**
@@ -184,6 +212,7 @@ bool ArrayListConstIterator<T>::operator==(const ArrayListConstIterator<T>& rhs)
 template <typename T>
 bool ArrayListConstIterator<T>::operator!=(const ArrayListConstIterator<T>& rhs) const
 {
+    return mPtr != rhs.mPtr;
 }
 
 /**
@@ -192,6 +221,7 @@ bool ArrayListConstIterator<T>::operator!=(const ArrayListConstIterator<T>& rhs)
  */
 template <typename T> const T& ArrayListConstIterator<T>::operator*() const
 {
+    return *mPtr;
 }
 
 /**
@@ -200,6 +230,7 @@ template <typename T> const T& ArrayListConstIterator<T>::operator*() const
  */
 template <typename T> const T* ArrayListConstIterator<T>::operator->() const
 {
+    return mPtr;
 }
 
 /**
@@ -208,6 +239,8 @@ template <typename T> const T* ArrayListConstIterator<T>::operator->() const
  */
 template <typename T> ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator++()
 {
+    ++mPtr;
+    return *this;
 }
 
 /**
@@ -216,6 +249,9 @@ template <typename T> ArrayListConstIterator<T>& ArrayListConstIterator<T>::oper
  */
 template <typename T> ArrayListConstIterator<T> ArrayListConstIterator<T>::operator++(int)
 {
+    ArrayListIterator<T> ret(mPtr);
+    mPtr++;
+    return ret;
 }
 
 /**
@@ -224,6 +260,8 @@ template <typename T> ArrayListConstIterator<T> ArrayListConstIterator<T>::opera
  */
 template <typename T> ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator--()
 {
+    --mPtr;
+    return *this;
 }
 
 /**
@@ -232,6 +270,9 @@ template <typename T> ArrayListConstIterator<T>& ArrayListConstIterator<T>::oper
  */
 template <typename T> ArrayListConstIterator<T> ArrayListConstIterator<T>::operator--(int)
 {
+    ArrayListIterator<T> ret(mPtr);
+    mPtr--;
+    return ret;
 }
 
 /**
@@ -242,6 +283,7 @@ template <typename T> ArrayListConstIterator<T> ArrayListConstIterator<T>::opera
 template <typename T>
 ArrayListConstIterator<T> ArrayListConstIterator<T>::operator+(int offset) const
 {
+    return ArrayListIterator<T>(mPtr + offset);
 }
 
 /**
@@ -252,6 +294,7 @@ ArrayListConstIterator<T> ArrayListConstIterator<T>::operator+(int offset) const
 template <typename T>
 ArrayListConstIterator<T> ArrayListConstIterator<T>::operator-(int offset) const
 {
+    return ArrayListIterator<T>(mPtr - offset);
 }
 
 /**
@@ -263,6 +306,7 @@ ArrayListConstIterator<T> ArrayListConstIterator<T>::operator-(int offset) const
 template <typename T>
 int ArrayListConstIterator<T>::operator-(const ArrayListConstIterator<T>& rhs) const
 {
+    return mPtr - rhs.mPtr;
 }
 
 /**
@@ -273,6 +317,8 @@ int ArrayListConstIterator<T>::operator-(const ArrayListConstIterator<T>& rhs) c
 template <typename T>
 ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator+=(const int& offset)
 {
+    mPtr += offset;
+    return *this;
 }
 
 /**
@@ -283,6 +329,8 @@ ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator+=(const int& offs
 template <typename T>
 ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator-=(const int& offset)
 {
+    mPtr -= offset;
+    return *this;
 }
 
 /**
@@ -292,15 +340,16 @@ ArrayListConstIterator<T>& ArrayListConstIterator<T>::operator-=(const int& offs
  */
 template <typename T> const T& ArrayListConstIterator<T>::operator[](int index) const
 {
+    return mPtr[index];
 }
 
 /**
  * Creates an iterator pointing to the same element as the provided pointer.
  * @param ptr
  */
-template <typename T>
-ArrayListConstIterator<T>::ArrayListConstIterator(const T* ptr)
+template <typename T> ArrayListConstIterator<T>::ArrayListConstIterator(const T* ptr)
 {
+    mPtr = ptr;
 }
 
 /**
@@ -309,6 +358,7 @@ ArrayListConstIterator<T>::ArrayListConstIterator(const T* ptr)
 template <typename T>
 ArrayListConstIterator<T> operator+(const int32_t& offset, const ArrayListConstIterator<T>& iter)
 {
+    return ArrayListIterator<T>(iter + offset);
 }
 
 #endif // ARRAYLISTITER_CPP

@@ -9,7 +9,11 @@ Universe* Universe::inst = nullptr;
  */
 Universe* Universe::instance()
 {
-  // TODO -- you fill in here to implement the singleton pattern.
+    // TODO -- you fill in here to implement the singleton pattern.
+    if (inst == nullptr) {
+        inst = new Universe();
+    }
+    return inst;
 }
 
 /**
@@ -17,7 +21,8 @@ Universe* Universe::instance()
  */
 Universe::~Universe()
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    release(objects);
 }
 
 /**
@@ -27,7 +32,9 @@ Universe::~Universe()
  */
 Object* Universe::addObject(Object* ptr)
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    objects.add(ptr);
+    return ptr;
 }
 
 /**
@@ -37,7 +44,8 @@ Object* Universe::addObject(Object* ptr)
  */
 Universe::iterator Universe::begin()
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return objects.begin();
 }
 
 /**
@@ -47,7 +55,8 @@ Universe::iterator Universe::begin()
  */
 Universe::const_iterator Universe::begin() const
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return objects.begin();
 }
 
 /**
@@ -57,7 +66,8 @@ Universe::const_iterator Universe::begin() const
  */
 Universe::iterator Universe::end()
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return objects.end();
 }
 
 /**
@@ -67,7 +77,8 @@ Universe::iterator Universe::end()
  */
 Universe::const_iterator Universe::end() const
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    return objects.end();
 }
 
 /**
@@ -77,9 +88,14 @@ Universe::const_iterator Universe::end() const
  */
 ArrayList<Object*> Universe::getSnapshot() const
 {
-  // TODO -- you fill in here by iterating through the array of
-  // objects and cloning each object into the corresponding element in
-  // copy.
+    // TODO -- you fill in here by iterating through the array of
+    // objects and cloning each object into the corresponding element in
+    // copy.
+    ArrayList<Object*>* ret = new ArrayList<Object*>(objects.size());
+    for(uint32_t i=0;i<objects.size();i++){
+        (*ret)[i] = objects[i]->clone();
+    }
+    return *ret;
 }
 
 /**
@@ -90,28 +106,28 @@ ArrayList<Object*> Universe::getSnapshot() const
  */
 void Universe::stepSimulation(const double& timeSec)
 {
-  ArrayList<Object*> copy (getSnapshot());
+    ArrayList<Object*> copy(getSnapshot());
 
-  for (size_t obj1 = 1; obj1 < objects.size(); ++obj1) {
-    // Calculate a new force vector for each entity
-    vector2 force;
+    for (size_t obj1 = 1; obj1 < objects.size(); ++obj1) {
+        // Calculate a new force vector for each entity
+        vector2 force;
 
-    for (size_t obj2 = 0; obj2 < objects.size(); ++obj2) {
-      if (obj1 != obj2)
-        force += objects[obj1]->getForce(*objects[obj2]);
+        for (size_t obj2 = 0; obj2 < objects.size(); ++obj2) {
+            if (obj1 != obj2)
+                force += objects[obj1]->getForce(*objects[obj2]);
+        }
+
+        vector2 accel = force / objects[obj1]->getMass();
+        vector2 oldPos = objects[obj1]->getPosition();
+        vector2 oldVel = objects[obj1]->getVelocity();
+        vector2 newPos = oldPos + oldVel * timeSec;
+        vector2 newVel = oldVel + accel * timeSec;
+
+        copy[obj1]->setVelocity(newVel);
+        copy[obj1]->setPosition(newPos);
     }
 
-    vector2 accel = force / objects[obj1]->getMass();
-    vector2 oldPos = objects[obj1]->getPosition();
-    vector2 oldVel = objects[obj1]->getVelocity();
-    vector2 newPos = oldPos + oldVel * timeSec;
-    vector2 newVel = oldVel + accel * timeSec;
-
-    copy[obj1]->setVelocity(newVel);
-    copy[obj1]->setPosition(newPos);
-  }
-
-  swap(copy);
+    swap(copy);
 }
 
 /**
@@ -120,7 +136,9 @@ void Universe::stepSimulation(const double& timeSec)
  */
 void Universe::swap(ArrayList<Object*>& snapshot)
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    release(objects);
+    objects = snapshot;
 }
 
 /**
@@ -128,5 +146,9 @@ void Universe::swap(ArrayList<Object*>& snapshot)
  */
 void Universe::release(ArrayList<Object*>& objects)
 {
-  // TODO -- you fill in here.
+    // TODO -- you fill in here.
+    for (auto& object : objects) {
+        delete object;
+    }
+    objects.clear();
 }

@@ -129,7 +129,7 @@ public:
      * @param index the desired location
      * @return a const T & to the desired element.
      */
-    const T& operator[]( uint32_t index) const;
+    const T& operator[](uint32_t index) const;
 
     /**
      * Empty check.
@@ -188,7 +188,8 @@ public:
      * Perform an exception-safe swap of the contents of *this with
      * src.
      */
-    void swap(ArrayList<T> &src) noexcept;
+    void swap(ArrayList<T>& src) noexcept;
+
 private:
     /**
      * Wrapper around our physical buffer.
@@ -204,6 +205,7 @@ private:
      * The maximum capacity of the physical buffer.
      */
     uint32_t mCapacity;
+    void check_range(const uint32_t& index) const;
 };
 
 #include "../src/ArrayList.cpp"

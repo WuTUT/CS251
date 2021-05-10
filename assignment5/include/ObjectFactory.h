@@ -12,20 +12,18 @@ class Object;
  */
 class ObjectFactory {
 public:
-  /*
-   * Deny access to the default constructor - must be used as static factory
-   */
-  ObjectFactory() = delete;
+    /*
+     * Deny access to the default constructor - must be used as static factory
+     */
+    ObjectFactory() = delete;
 
-  /**
-   * A factory method that creates an object with the provided
-   * parameters. Default values of zero will be assigned to everything
-   * except for name.  Also adds the object to the singleton Universe.
-   */
-  static Object* makeObject(std::string name,
-                            double mass = 0,
-                            const vector2& pos = vector2(),
-                            const vector2& vel = vector2());
+    /**
+     * A factory method that creates an object with the provided
+     * parameters. Default values of zero will be assigned to everything
+     * except for name.  Also adds the object to the singleton Universe.
+     */
+    static Object* makeObject(std::string name, double mass = 0, const vector2& pos = vector2(),
+        const vector2& vel = vector2());
 };
 
 #endif // OBJECT_FACTORY_H
