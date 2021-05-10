@@ -12,7 +12,7 @@ Object* ObjectFactory::makeObject(
 {
     // TODO -- you fill in here by creating an Object with the given
     // parameters and adding it to the Universe singleton.
-    Object* o = new Object(name, mass, pos, vel);
-    Universe::instance()->addObject(o);
-    return o;
+
+    return Universe::instance()->addObject(new Object(name, mass, pos, vel));
+
 }

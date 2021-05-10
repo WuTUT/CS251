@@ -30,7 +30,7 @@ void Object::accept(Visitor& visitor)
 Object* Object::clone() const
 {
     // TODO -- you fill in here.
-    return new Object(name,mass,position,velocity);
+    return new Object(*this);
 }
 
 /**
@@ -75,8 +75,7 @@ vector2 Object::getForce(const Object& rhs) const noexcept
     double distSq = (rhs.getPosition() - getPosition()).normSq();
     double mag = (Universe::G * getMass() * rhs.getMass()) / distSq;
     vector2 dir = (rhs.getPosition() - getPosition()).normalize();
-    auto ret = mag * dir;
-    return ret;
+    return mag * dir;
 }
 
 /**

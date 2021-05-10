@@ -23,6 +23,8 @@ Universe::~Universe()
 {
     // TODO -- you fill in here.
     release(objects);
+    //inst is packed by unique_ptr so not delete inst just set this nullptr
+    inst = nullptr;
 }
 
 /**
@@ -91,11 +93,23 @@ ArrayList<Object*> Universe::getSnapshot() const
     // TODO -- you fill in here by iterating through the array of
     // objects and cloning each object into the corresponding element in
     // copy.
-    ArrayList<Object*>* ret = new ArrayList<Object*>(objects.size());
-    for(uint32_t i=0;i<objects.size();i++){
-        (*ret)[i] = objects[i]->clone();
+    // ArrayList<Object*> ret(objects); //???
+     ArrayList<Object*> ret(objects.size());
+    for (uint32_t i = 0; i < objects.size(); i++) {
+    //    (*ret)[i] = objects[i]->clone();
+        ret[i] = objects[i]->clone();
     }
-    return *ret;
+     //return ret; //wrong
+     return *(&ret);//right
+
+    //ArrayList<Object*>* ret = new ArrayList<Object*>(objects.size());
+    //for (uint32_t i = 0; i < objects.size(); i++) {
+    //    (*ret)[i] = objects[i]->clone();
+    //    //ret[i] = objects[i]->clone();
+    //}
+    //return *ret;
+
+
 }
 
 /**
@@ -137,8 +151,10 @@ void Universe::stepSimulation(const double& timeSec)
 void Universe::swap(ArrayList<Object*>& snapshot)
 {
     // TODO -- you fill in here.
-    release(objects);
-    objects = snapshot;
+    // release(objects);
+    // objects = snapshot;
+    objects.swap(snapshot);
+    release(snapshot);
 }
 
 /**
@@ -147,7 +163,7 @@ void Universe::swap(ArrayList<Object*>& snapshot)
 void Universe::release(ArrayList<Object*>& objects)
 {
     // TODO -- you fill in here.
-    for (auto& object : objects) {
+    for (auto object : objects) {
         delete object;
     }
     objects.clear();
